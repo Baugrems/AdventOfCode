@@ -1,6 +1,14 @@
 import sys
 import numpy as np
 
+data_file = sys.argv[1]
+target = sys.argv[2]
+target2 = sys.argv[3]
+
+data = open(data_file)
+num_commands = len(data.readlines())
+data.close()
+
 wires = dict()
 max_val = 65535
 
@@ -86,12 +94,38 @@ def handle_signal_source(line):
 
     
 
+def part1():
+    commands_run = []
+    while len(commands_run) < num_commands:
+        index = 0
+        data = open(data_file)
+        for line in data:
+            if index in commands_run:
+                index += 1
+                continue
+            line = line.split()
+            if line[0] == 'NOT':
+                if handle_not(line):
+                    commands_run.append(index)
+            elif line[1] in operators:
+                if handle_bitwise(line):
+                    commands_run.append(index)
+            elif line[1] == '->' and line[0].isdigit():
+                if handle_signal(line):
+                    commands_run.append(index)
+            elif line[1] == '->':
+                if handle_signal_source(line):
+                    commands_run.append(index)
+            index += 1
+        data.close()
+        print(len(commands_run))
+    return wires[target]
+
 def main():
-    data_file = sys.argv[1]
-    target = sys.argv[2]
-    data = open(data_file)
-    num_commands = len(data.readlines())
-    data.close()
+    solution = part1()
+    global wires
+    wires = {}
+    wires[target2] = solution
     commands_run = []
     while len(commands_run) < num_commands:
         index = 0
@@ -117,8 +151,8 @@ def main():
         data.close()
         print(len(commands_run))
     print(wires[target])
-
-
+        
+    
 
 if __name__ == '__main__':
     main()

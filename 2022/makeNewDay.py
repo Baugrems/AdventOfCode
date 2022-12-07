@@ -24,6 +24,21 @@ if __name__ == '__main__':
     main()
     ''')
     f.close()
+    f = open(path + "/part1.py", "w")
+    f.write('''
+import sys
+import numpy as np
+
+def main():
+    dataFile = sys.argv[1]
+    data = open(dataFile)
+    for line in data:
+        pass
+
+if __name__ == '__main__':
+    main()
+    ''')
+    f.close()
 
     f = open(path + "/data-ex", 'w')
     f.write("")

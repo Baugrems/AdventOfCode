@@ -24,7 +24,7 @@ if __name__ == '__main__':
     main()
     ''')
     f.close()
-    f = open(path + "/part1.py", "w")
+    f = open(path + "/part2.py", "w")
     f.write('''
 import sys
 import numpy as np
